@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors     = ["André Rodrigues"]
   spec.email       = ["andrerpbts@gmail.com"]
   spec.homepage    = "N/A"
-  spec.summary     = ""
-  spec.description = "TODO: Description of CollectionFilters."
+  spec.summary     = "A tool to help you to add filter params in your APIs"
+  spec.description = "A tool to help you to add filter params in your APIs"
   spec.license     = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
