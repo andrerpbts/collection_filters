@@ -1,5 +1,7 @@
 # CollectionFilters
 
+[![Build Status](https://travis-ci.org/andrerpbts/collection_filters.svg?branch=master)](https://travis-ci.org/andrerpbts/collection_filters)
+
 A tool to help you to add filter params in your APIs
 
 ## Installation
