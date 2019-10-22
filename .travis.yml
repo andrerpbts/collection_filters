@@ -1,0 +1,21 @@
+language: ruby
+
+services:
+  - postgresql
+
+rvm:
+  - 2.5.3
+  - 2.6.0
+
+cache: bundler
+
+sudo: false
+
+before_install:
+  - gem install bundler -v '< 2'
+
+before_script:
+  - bundle exec rails db:create
+
+script:
+  - bundle exec rspec
