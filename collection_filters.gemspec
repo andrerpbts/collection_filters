@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.version     = CollectionFilters::VERSION
   spec.authors     = ["André Rodrigues"]
   spec.email       = ["andrerpbts@gmail.com"]
-  spec.homepage    = "N/A"
+  spec.homepage    = "https://github.com/andrerpbts/collection_filters"
   spec.summary     = "A tool to help you to add filter params in your APIs"
   spec.description = "A tool to help you to add filter params in your APIs"
   spec.license     = "MIT"
@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
   end
 
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+  spec.required_ruby_version = ">= 2.5.0"
 
   spec.add_dependency 'rails', '>= 5'
 
