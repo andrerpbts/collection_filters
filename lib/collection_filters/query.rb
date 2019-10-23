@@ -35,7 +35,7 @@ module CollectionFilters
     end
 
     def class_name_for(filter)
-      "CollectionFilter::Filters::#{filter.to_s.camelize}Filter"
+      "CollectionFilters::Filters::#{filter.to_s.camelize}Filter"
     end
   end
 end
