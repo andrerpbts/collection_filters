@@ -46,18 +46,15 @@ def index
     }
   )
 
-  @documents = filter.call(
-    filters: params,
-    options: { page: params[:page] }
-  )
+  @documents = filter.call(filters: params)
 
-  render json: @documents, status: :ok
+  render json: @documents.per(50).page(params[:page]), status: :ok
 end
 ```
 
 In this example, we're instruction collection filter to get the initial collection `current_user.documents.includes(:document_type)` and for each param sent in `params`, we are just allowing `[:created_at, :archived_at, :status, :document_type_code]`. Please note when you have simple filters you can just set it using its name as symbol, otherwise you can configure it to tell it what is the table, column, or any other configuration needed. In these cases you must specify the filter name through `filter` config option.
 
-Then, with the filter all set, we can just call it passing the params, and some extra options like `page` for page number, or `per` to set how many items will come in each page. By default the maximum records per page is `100` but you can configure it adding the `max_per_page` config option when defining the filter to set another number to it.
+Then, with the filters all set, we can just call it passing the proper received params. It'll return a collection, then you can apply any other command to the relation, like paginate, ordering, grouping, etc...
 
 So, here are the filters available now:
 
