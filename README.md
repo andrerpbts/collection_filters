@@ -28,7 +28,7 @@ To use it, just define a new collection filter set with the initial collection a
 
 ```ruby
 def index
-  filter = CollectionFilter.define(
+  filter = CollectionFilters.define(
     collection: current_user.documents.includes(:document_type),
     available_filters: {
       created_at: :date,
@@ -46,15 +46,15 @@ def index
     }
   )
 
-  @documents = filter.call(filters: params)
+  @documents = filter.call(filters: params).per(50).page(params[:page])
 
-  render json: @documents.per(50).page(params[:page]), status: :ok
+  render json: @documents, status: :ok
 end
 ```
 
-In this example, we're instruction collection filter to get the initial collection `current_user.documents.includes(:document_type)` and for each param sent in `params`, we are just allowing `[:created_at, :archived_at, :status, :document_type_code]`. Please note when you have simple filters you can just set it using its name as symbol, otherwise you can configure it to tell it what is the table, column, or any other configuration needed. In these cases you must specify the filter name through `filter` config option.
+In this example, we're instructing collection filter to get the initial collection `current_user.documents.includes(:document_type)` and for each param sent in `params`, we are only allowing `[:created_at, :archived_at, :status, :document_type_code]`. Please note when you have simple filters you can just set it using its name as a symbol, otherwise, you can configure it to tell it what is the table, column, or any other configuration needed. In these cases, you must specify the filter name through the `filter` config option.
 
-Then, with the filters all set, we can just call it passing the proper received params. It'll return a collection, then you can apply any other command to the relation, like paginate, ordering, grouping, etc...
+Then, with all filters set, we can just call it passing the properly received params. It'll return a collection, then you can apply any other command to the relation, like paginate, ordering, grouping, etc...
 
 So, here are the filters available now:
 
@@ -62,48 +62,48 @@ So, here are the filters available now:
 
 Date filter accepts a string with one or more dates which will coerce into date/datetime and filter the collection. Some examples are:
 
-- '2019-10-01, 2019-10-03' will coerce into:
-    [
-      Date.new(2019, 10, 1).beginning_of_day..Date.new(2019, 10, 1).end_of_day,
-      Date.new(2019, 10, 3).beginning_of_day..Date.new(2019, 10, 3).end_of_day
-    ]
+    - '2019-10-01, 2019-10-03' will coerce into:
+        [
+          Date.new(2019, 10, 1).beginning_of_day..Date.new(2019, 10, 1).end_of_day,
+          Date.new(2019, 10, 3).beginning_of_day..Date.new(2019, 10, 3).end_of_day
+        ]
 
-- '2019-10-01..2019-10-03' will coerce into:
-    [
-      Date.new(2019, 10, 1).beginning_of_day..Date.new(2019, 10, 3).end_of_day
-    ]
+    - '2019-10-01..2019-10-03' will coerce into:
+        [
+          Date.new(2019, 10, 1).beginning_of_day..Date.new(2019, 10, 3).end_of_day
+        ]
 
-- '2019-10-01T23:10:00..2019-10-03' will coerce into:
-    [
-      DateTime.new(2019, 10, 1, 23, 10, 0)..Date.new(2019, 10, 3).end_of_day
-    ]
+    - '2019-10-01T23:10:00..2019-10-03' will coerce into:
+        [
+          DateTime.new(2019, 10, 1, 23, 10, 0)..Date.new(2019, 10, 3).end_of_day
+        ]
 
 #### Integer filter
 
 Integer filter accepts a string or an array wich will coerce to integer and filter the collection. Some examples are:
 
-- '1,2,3' will coerce into:
-    [1, 2, 3]
+    - '1,2,3' will coerce into:
+        [1, 2, 3]
 
-- '1..3' will coerce into:
-    [1..3]
+    - '1..3' will coerce into:
+        [1..3]
 
 #### String Filter
 
 String filters just accepts a string (with or without wildcards) and will filter the collection. Some examples are:
 
-- 'test%' will filter the collection with `LIKE 'test%'
-- 'foobar' will filter the collection with `LIKE 'foobar'
+    - 'test%' will filter the collection with `LIKE 'test%'
+    - 'foobar' will filter the collection with `LIKE 'foobar'
 
 #### List Filter
 
 This filter accepts a string or an array which can be (or not) validate through `accepted_values` config option. and, it filters the collection. Some examples are:
 
-- 'pending, accepted' with empty `accepted_values` will coerce into:
-  ['pending', 'accepted']
+    - 'pending, accepted' with empty `accepted_values` will coerce into:
+      ['pending', 'accepted']
 
-- 'pending, accepted' with `accepted_values` as `['pending']` will coerce into:
-  ['pending']
+    - 'pending, accepted' with `accepted_values` as `['pending']` will coerce into:
+      ['pending']
 
 ## Contributing
 
