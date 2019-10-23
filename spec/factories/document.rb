@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :document, class: CollectionFilters::Document do
+  factory :document, class: Document do
     name { 'Contract Test' }
   end
 end
